@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
     <title>Aplicación Móvil - Menú Desplegable</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -20,6 +20,12 @@
             justify-content: center; /* Centrar horizontalmente */
         }
 
+        .menu-container {
+            position: absolute;
+            top: 10px; /* Posición en la parte superior */
+            left: 10px; /* Posición en la esquina izquierda */
+        }
+
         .content-container {
             text-align: center; /* Centrar texto */
             background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semi-transparente */
@@ -34,32 +40,33 @@
         }
 
         .btn-primary {
-            width: 100%; /* Botón optimizado para móvil */
+            width: auto; /* Ajustar tamaño del botón */
         }
     </style>
 </head>
 <body>
-    <div class="content-container">
-        <h1>About Us</h1>
-        <p>Gure textua</p>
+
+<!-- Contenedor del menú en la esquina superior izquierda -->
+<div class="menu-container">
+    <div class="dropdown">
+        <button class="btn btn-primary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+            Opciones
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li><a class="dropdown-item" href="sarrera.html">Sarrera</a></li>
+            <li><a class="dropdown-item" href="araudia.html">Araudi kontsulta</a></li>
+            <li><a class="dropdown-item" href="memoria.html">Memoria kontsulta</a></li>
+            <li><a class="dropdown-item" href="egutegia.html">Egutegiak 24-25</a></li>
+            <li><a class="dropdown-item" href="autoebaluazioa.html">Autoebaluazioa</a></li>
+            <li><a class="dropdown-item" href="aboutus.html">About us</a></li>
+        </ul>
     </div>
-<div class="container-fluid mt-3">
-    <!-- Botón de Despliegue optimizado para móvil -->
-    <div class="d-flex justify-content-left">
-        <div class="dropdown">
-            <button class="btn btn-primary btn-lg dropdown-toggle w-100" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-                About us
-            </button>
-            <ul class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
-                <li><a class="dropdown-item" href="sarrera.html">Sarrera</a></li>
-                <li><a class="dropdown-item" href="araudia.html">Araudi kontsulta</a></li>
-                <li><a class="dropdown-item" href="memoria.html">Memoria kontsulta</a></li>
-                <li><a class="dropdown-item" href="egutegia.html">Egutegiak 24-25</a></li>
-                <li><a class="dropdown-item" href="autoebaluazioa.html">Autoebaluazioa</a></li>
-                <li><a class="dropdown-item" href="aboutus.html">About us</a></li>
-            </ul>
-        </div>
-    </div>
+</div>
+
+<!-- Contenedor centrado del texto -->
+<div class="content-container">
+    <h1>Bienvenido a Nuestra Aplicación</h1>
+    <p>Descubre todas las opciones disponibles en el menú desplegable.</p>
 </div>
 
 <!-- Bootstrap JS -->
