@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-    <title>Aplicación Móvil - Menú Desplegable</title>
+    <title>Araudia</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -35,12 +35,25 @@
             max-width: 90%; /* Ajusta el ancho para dispositivos móviles */
         }
 
-        .dropdown-menu {
-            background-color: rgba(255, 255, 255, 0.9); /* Fondo más claro para el menú */
-        }
-
         .btn-primary {
             width: auto; /* Ajustar tamaño del botón */
+        }
+
+        .menu-right {
+            margin-top: 20px; /* Espaciado superior */
+        }
+
+        .menu-right .btn {
+            margin-bottom: 10px; /* Espaciado entre botones */
+        }
+
+        .text-container {
+            text-align: justify;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 5px;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
@@ -63,11 +76,52 @@
     </div>
 </div>
 
-<!-- Contenedor centrado del texto -->
+<!-- Contenedor centrado -->
 <div class="content-container">
-    <h1>Bienvenido a Nuestra Aplicación</h1>
-    <p>Descubre todas las opciones disponibles en el menú desplegable.</p>
+    <h1>Araudia</h1>
+    <p>Aukeratu bat araudia ikusteko.</p>
+
+    <!-- Menú de normas a la derecha -->
+    <div class="menu-right">
+        <button class="btn btn-outline-primary btn-lg" onclick="loadContent('informática')">Ingeniería Informática</button>
+        <button class="btn btn-outline-secondary btn-lg" onclick="loadContent('ia')">Inteligencia Artificial</button>
+    </div>
+
+    <!-- Contenedor de texto -->
+    <div class="text-container" id="text-container">
+        <p>Arautegi honek UPV/EHUk ematen dituen graduko ikasketa planetan zehaztutako gradu amaierako lanak definitu, egin, defendatu, kalifikatu eta tramitatzeko irizpideak jasotzen ditu. </p>
+    </div>
 </div>
+
+<!-- Script para cargar el contenido dinámico -->
+<script>
+        const content = {
+            informática: `
+                <h1>Informática</h1>
+                <p>1. Helburua eta ezarpen eremua: TFGak dagokion titulua egiaztatzeko aginduan oinarritzen dira. Beste arau eta prozedurekin osatuko dira 
+                (ebaluazio sistemak, kredituen transferentzia, etab.). Fakultate edo eskola bakoitzaren araudi espezifikoa errespetatuz garatuko dira.</p>
+                <p>2. Tutoretza: Ikasle bakoitzak TFGaren zuzendari bat izango du, eta hark gidatuko du proiektu osoan zehar.</p>
+                <p>3. Lanaren gaia: Lanaren gaia ikasleak eta tutoreak adostu beharko dute, eta gai hori sektore teknologikoan egon behar da, eguneroko arazoei 
+                soluzio praktikoak eskaintzeko.</p>
+                <p>4. Ebaluzio irizpideak: TFGaren ebaluazioa egindako lanaren kalitatearen arabera egingo da, baita azken ahozko aurkezpenaren ebaluazioa ere.</p>
+            `,
+            ia: `
+                <h1>Inteligencia Artificial</h1>
+                <p>1. Helburua eta ezarpen eremua: IAko TFGak arlo espezializatuetara bideratuta daude, 
+                hala nola Machine Learning, Natural Language Processing, edo Computer Vision. Araudi orokorrak eta departamentuko eskakizunak beteko dituzte.</p>
+                <p>2. Ebaluzio irizpideak: Memoria idatziz aurkeztuko da, eta ahozko aurkezpena egingo da irakasle-talde baten aurrean.</p>
+                <p>3. Teknologia eta tresnak: IAko proiektuak ezagutza teknologiko aurreratua eskatzen du, eta ikasleek tresna egokiak erabili beharko dituzte, 
+                hala nola Python, TensorFlow edo PyTorch, proiektuaren helburuak lortzeko.</p>
+                <p>4. Kolaborazioa eta etika: TFGak beti izan beharko ditu kontuan etika-arazoak, adibidez, pribatutasuna eta datuen babesa, eta, halaber, 
+                proiektuek talde-lanaren garrantzia azpimarratu behar dute.</p>
+            `
+        };
+
+    function loadContent(section) {
+        const container = document.getElementById('text-container');
+        container.innerHTML = `<p>${content[section]}</p>`;
+    }
+</script>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
