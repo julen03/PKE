@@ -43,8 +43,13 @@
             width: auto; /* Ajustar tamaño del botón */
         }
 
-        #calendar-image {
+        #calendar-container {
+            display: none; /* El contenedor inicialmente está oculto */
             margin-top: 20px;
+            text-align: center;
+        }
+
+        #calendar-image {
             max-width: 80%;
             height: auto;
             border-radius: 10px;
@@ -98,8 +103,10 @@
     <!-- Botón para mostrar la imagen del calendario -->
     <button class="btn btn-primary" onclick="showCalendar()">Ver Calendario</button>
 
-    <!-- Imagen del calendario -->
-    <img id="calendar-image" src="" alt="Calendario" style="display:none;">
+    <!-- Contenedor de la imagen del calendario -->
+    <div id="calendar-container">
+        <img id="calendar-image" src="" alt="Calendario">
+    </div>
 </div>
 
 <!-- Bootstrap JS -->
@@ -115,26 +122,32 @@
         let imageSrc = '';
 
         if (year === "2023-2024" && faculty === "Bilbao") {
-            imageSrc = "image/egutegi_2023_bilbao.jpg"; // Reemplaza con la ruta de la imagen correspondiente
+            imageSrc = "image/egutegi_2023_bilbao.png"; // Reemplaza con la ruta de la imagen correspondiente
         } else if (year === "2023-2024" && faculty === "Vitoria") {
-            imageSrc = "image/egutegi_2023_vitoria.jpg"; // Reemplaza con la ruta de la imagen correspondiente
+            imageSrc = "image/egutegi_2023_vitoria.png"; // Reemplaza con la ruta de la imagen correspondiente
         } else if (year === "2023-2024" && faculty === "Guipuzkoa") {
-            imageSrc = "image/egutegi_2023_guipuzkoa.jpg"; // Reemplaza con la ruta de la imagen correspondiente
+            imageSrc = "image/egutegi_2023_guipuzkoa.png"; // Reemplaza con la ruta de la imagen correspondiente
         } else if (year === "2022-2023" && faculty === "Bilbao") {
-            imageSrc = "image/egutegi_2022_bilbao.jpg"; // Reemplaza con la ruta de la imagen correspondiente
+            imageSrc = "image/egutegi_2022_bilbao.png"; // Reemplaza con la ruta de la imagen correspondiente
         } else if (year === "2022-2023" && faculty === "Vitoria") {
-            imageSrc = "image/egutegi_2022_vitoria.jpg"; // Reemplaza con la ruta de la imagen correspondiente
+            imageSrc = "image/egutegi_2022_vitoria.png"; // Reemplaza con la ruta de la imagen correspondiente
         } else if (year === "2022-2023" && faculty === "Guipuzkoa") {
-            imageSrc = "image/egutegi_2022_guipuzkoa.jpg"; // Reemplaza con la ruta de la imagen correspondiente
+            imageSrc = "image/egutegi_2022_guipuzkoa.png"; // Reemplaza con la ruta de la imagen correspondiente
         }
 
-        // Muestra la imagen correspondiente
+        // Verifica si la imagen existe antes de mostrarla
         const calendarImage = document.getElementById("calendar-image");
-        calendarImage.src = imageSrc;
-        calendarImage.style.display = "block";
+        const img = new Image();
+        img.onload = function() {
+            calendarImage.src = imageSrc;
+            document.getElementById("calendar-container").style.display = "block"; // Muestra el contenedor
+        };
+        img.onerror = function() {
+            alert("La imagen no se pudo cargar. Verifica la ruta.");
+        };
+        img.src = imageSrc;
     }
 </script>
 
 </body>
 </html>
-
