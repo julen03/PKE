@@ -3,71 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-    <title>Aplicación Móvil - Menú Desplegable</title>
+    <title>Aplicación Móvil - Autoevaluación</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
-            background-image: url('fondoa.png');
+            background-image: url('fondoa.png'); /* Fondo de la página */
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
             background-position: center;
-            height: 100vh;
-            margin: 0;
-            display: flex;
-            flex-direction: column; /* Alineación vertical */
-            align-items: flex-start; /* Alineado al inicio horizontal */
-            padding: 10px; /* Añade espacio alrededor del contenido */
+            height: 100vh; /* Altura completa */
+            margin: 0; /* Elimina márgenes por defecto */
+            display: flex; /* Flexbox para centrar */
+            align-items: center; /* Centrar verticalmente */
+            justify-content: center; /* Centrar horizontalmente */
         }
 
         .menu-container {
-            margin-bottom: 10px; /* Espaciado entre el menú y el contenido */
+            position: absolute;
+            top: 10px; /* Posición en la parte superior */
+            left: 10px; /* Posición en la esquina izquierda */
         }
 
         .content-container {
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            flex: 1; /* Permite que el contenido use el resto del espacio */
-            width: 100%; /* Ocupa todo el ancho disponible */
-            text-align: center; /* Centra el contenido */
+            text-align: center; /* Centrar texto */
+            background-color: rgba(255, 255, 255, 0.8); /* Fondo blanco semi-transparente */
+            padding: 20px; /* Espaciado interno */
+            border-radius: 10px; /* Bordes redondeados */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para destacar */
+            max-width: 90%; /* Ajusta el ancho para dispositivos móviles */
+        }
+
+        .dropdown-menu {
+            background-color: rgba(255, 255, 255, 0.9); /* Fondo más claro para el menú */
         }
 
         .btn-primary {
             width: auto; /* Ajustar tamaño del botón */
         }
 
-        .menu-right {
-            margin-top: 10px; /* Espaciado superior */
-            text-align: center; /* Centra los botones */
+        .hidden {
+            display: none; /* Clase para ocultar elementos */
         }
 
-        .menu-right .btn {
-            display: block; /* Los botones se alinearán uno debajo del otro */
-            margin: 10px auto; /* Espaciado y centrado horizontal */
+        .disabled-menu {
+            pointer-events: none; /* Desactivar interacción */
+            background-color: #d3d3d3; /* Fondo gris para indicar desactivado */
         }
 
-        .text-container {
-            text-align: justify;
-            padding: 15px;
-            background-color: #fff;
-            border-radius: 5px;
-            margin-top: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        /* Justificar el texto de las respuestas */
+        .question-container {
+            text-align: justify; /* Justificar el texto de las opciones */
+        }
+
+        .feedback {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .passed {
+            color: green; /* Puntuación aprobada en verde */
+        }
+
+        .failed {
+            color: red; /* Puntuación suspendida en rojo */
         }
     </style>
 </head>
 <body>
 
 <!-- Contenedor del menú en la esquina superior izquierda -->
-<div class="menu-container">
+<div class="menu-container" id="menuContainer">
     <div class="dropdown">
         <button class="btn btn-primary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-            Opciones
+            Menu
         </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton" id="dropdownMenu">
             <li><a class="dropdown-item" href="sarrera.html">Sarrera</a></li>
             <li><a class="dropdown-item" href="araudia.html">Araudi kontsulta</a></li>
             <li><a class="dropdown-item" href="memoria.html">Memoria kontsulta</a></li>
@@ -79,12 +91,176 @@
 </div>
 
 <!-- Contenedor centrado del texto -->
-<div class="content-container">
-    <h1>Bienvenido a Nuestra Aplicación</h1>
-    <p>Descubre todas las opciones disponibles en el menú desplegable.</p>
+<div class="content-container" id="startContainer">
+    <h1>¿Quieres empezar la Autoevaluación?</h1>
+    <p>Haz clic en el botón para comenzar.</p>
+    <button id="startBtn" class="btn btn-primary">Empezar Autoevaluación</button>
+</div>
+
+<!-- Contenedor de las preguntas (oculto hasta que se empiece la autoevaluación) -->
+<div class="content-container hidden" id="questionContainer">
+    <h1>Autoevaluación</h1>
+    <div id="questionContent"></div>
+    <div class="btn-container">
+        <button id="prevBtn" class="btn btn-secondary" onclick="prevQuestion()">Anterior</button>
+        <button id="nextBtn" class="btn btn-primary" onclick="nextQuestion()">Siguiente</button>
+        <button id="finishBtn" class="btn btn-success" onclick="finishQuiz()" style="display: none;">Finalizar</button>
+    </div>
+    <div class="feedback" id="feedback"></div>
 </div>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    const questions = [
+        {
+            question: "Hauetako zein gradutan aukeratu behar da espezialitate bat Gradu Amaierako Lana egiteko?",
+            options: ["Adimen artifiziala", "Ingenieritza informatikoa", "Arkitektura"],
+            answer: 1
+        },
+        {
+            question: "Zenbat deialdi daude GrAL-a egiteko?",
+            options: ["5", "4", "8"],
+            answer: 1
+        },
+        {
+            question: "Zer motatako lanak kontsideratzen dira Gradu Amaierako Lanak?",
+            options: [
+                "Ikasketa planean jasotako gaitasunak eskuratzeko aukera ematen duten lan akademikoak",
+                "Enpresa pribatuetan egindako ikerketa lanak",
+                "Gainbegiratzerik gabeko lanak"
+            ],
+            answer: 0
+        },
+        {
+            question: "Nor izan daiteke Gradu Amaierako Lanaren zuzendaria?",
+            options: [
+                "Unibertsitateko irakasle edozein, bere lotura kontuan hartu gabe.",
+                "Graduan eskolak ematen dituen sail bateko irakaslea edo unibertsitatearekin lotura duen doktorea.",
+                "Esperientzia akademikorik gabeko profesional bat."
+            ],
+            answer: 1
+        },
+        {
+            question: "Zer behar da kanpoko erakunde batekin GRALa egitea nahi izanez gero?",
+            options: [
+                "Enpresarekin lan-kontratua.",
+                "Erakundearekin konfidentzialtasun hitzarmen bat.",
+                "Lankidetza hitzarmen bat sinatzea."
+            ],
+            answer: 2
+        },
+        {
+            question: "Zer dokumentu aurkeztu behar du ikasleak, bere GRALak pertsonen edo animalien datuak erabiltzearen ondorioz?",
+            options: [
+                "Gurasoen baimena.",
+                "UPV/EHUko Etika Batzordearen eskakizunen arabera dokumentuak.",
+                "Ikasgaiko irakaslearen txostena."
+            ],
+            answer: 1
+        },
+        {
+            question: "Zer egin behar du ikasleak GRALen defentsa amaitzean?",
+            options: [
+                "Ez du ezer egin beharrik, defentsa aukerakoa da.",
+                "Epaimahaiaren galderei eta iruzkinei erantzun behar diezu.",
+                "Aurkezpena egin eta berehala atera behar da."
+            ],
+            answer: 1
+        },
+        {
+            question: "Zer gertatzen da ikasle batek 9.0 edo hortik gorako kalifikazioa lortzen badu bere GRALean?",
+            options: [
+                "Automatikoki jasotzen du ohorezko titulua.",
+                "'Ohorezko aipamena' jasotzeko aukera izango du, baldin eta kalifikazio onena duen % 5en artean badago.",
+                "Ez du aitorpen berezirik jasotzen."
+            ],
+            answer: 1
+        }
+    ];
+
+    let currentQuestionIndex = 0;
+    let score = 0;
+
+    // Mostrar el formulario de evaluación
+    function startQuiz() {
+        document.getElementById('menuContainer').classList.add('disabled-menu'); // Desactivar el menú
+        document.getElementById('startContainer').classList.add('hidden'); // Ocultar pantalla de inicio
+        document.getElementById('questionContainer').classList.remove('hidden'); // Mostrar el formulario
+        displayQuestion();
+    }
+
+    // Mostrar las preguntas
+    function displayQuestion() {
+        const question = questions[currentQuestionIndex];
+        const questionContent = document.getElementById('questionContent');
+        questionContent.innerHTML = `
+            <h2>${question.question}</h2>
+            <div class="question-container">
+                ${question.options.map((option, index) => `
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="question${currentQuestionIndex}" value="${index}" id="option${index}">
+                        <label class="form-check-label" for="option${index}">
+                            ${option}
+                        </label>
+                    </div>
+                `).join('')}
+            </div>
+        `;
+    }
+
+    // Siguiente pregunta
+    function nextQuestion() {
+        const selectedOption = document.querySelector(`input[name="question${currentQuestionIndex}"]:checked`);
+        if (selectedOption) {
+            const answer = questions[currentQuestionIndex].answer;
+            if (parseInt(selectedOption.value) === answer) {
+                score++;
+            }
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                displayQuestion();
+            } else {
+                finishQuiz();
+            }
+        } else {
+            alert("Por favor, selecciona una opción.");
+        }
+    }
+
+    // Pregunta anterior
+    function prevQuestion() {
+        if (currentQuestionIndex > 0) {
+            currentQuestionIndex--;
+            displayQuestion();
+        }
+    }
+
+    // Finalizar el cuestionario
+    function finishQuiz() {
+        const percentage = (score / questions.length) * 100;
+        const feedback = document.getElementById('feedback');
+        
+        if (percentage > 50) {
+            feedback.innerText = `Has aprobado con ${score} de ${questions.length} (${Math.round(percentage)}%)`;
+            feedback.classList.add('passed');
+            feedback.classList.remove('failed');
+        } else {
+            feedback.innerText = `Has suspendido con ${score} de ${questions.length} (${Math.round(percentage)}%)`;
+            feedback.classList.add('failed');
+            feedback.classList.remove('passed');
+        }
+
+        document.getElementById('nextBtn').style.display = 'none'; // Ocultar siguiente
+        document.getElementById('prevBtn').style.display = 'none'; // Ocultar anterior
+        document.getElementById('finishBtn').style.display = 'none'; // Ocultar finalizar
+        
+        // Habilitar de nuevo el menú
+        document.getElementById('menuContainer').classList.remove('disabled-menu');
+    }
+
+    document.getElementById("startBtn").addEventListener("click", startQuiz);
+</script>
+
 </body>
 </html>
