@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-    <title>Aplicación Móvil - Menú Desplegable</title>
+    <title>Egutegi</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
@@ -42,11 +42,19 @@
         .btn-primary {
             width: auto; /* Ajustar tamaño del botón */
         }
+
+        #calendar-image {
+            margin-top: 20px;
+            max-width: 80%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra para la imagen */
+        }
     </style>
 </head>
 <body>
 
-<!-- Contenedor del menú en la esquina superior izquierda -->
+<!-- Menú a la izquierda -->
 <div class="menu-container">
     <div class="dropdown">
         <button class="btn btn-primary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
@@ -63,13 +71,70 @@
     </div>
 </div>
 
-<!-- Contenedor centrado del texto -->
+<!-- Contenedor del contenido de Egutegi -->
 <div class="content-container">
-    <h1>Bienvenido a Nuestra Aplicación</h1>
-    <p>Descubre todas las opciones disponibles en el menú desplegable.</p>
+    <h1>Egutegiak</h1>
+    <p>Aukeratu urtea eta fakultatea egutegia ikusi ahal izateko:</p>
+
+    <!-- Menú desplegable para seleccionar el año -->
+    <div class="mb-3">
+        <label for="yearSelect" class="form-label">Aukeratu urtea:</label>
+        <select class="form-select" id="yearSelect">
+            <option value="2023-2024">2023-2024</option>
+            <option value="2022-2023">2022-2023</option>
+        </select>
+    </div>
+
+    <!-- Menú desplegable para seleccionar la facultad -->
+    <div class="mb-3">
+        <label for="facultySelect" class="form-label">Aukeratu fakultatea:</label>
+        <select class="form-select" id="facultySelect">
+            <option value="Bilbao">Bilbao</option>
+            <option value="Vitoria">Vitoria</option>
+            <option value="Guipuzkoa">Guipuzkoa</option>
+        </select>
+    </div>
+
+    <!-- Botón para mostrar la imagen del calendario -->
+    <button class="btn btn-primary" onclick="showCalendar()">Ver Calendario</button>
+
+    <!-- Imagen del calendario -->
+    <img id="calendar-image" src="" alt="Calendario" style="display:none;">
 </div>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    function showCalendar() {
+        // Obtiene los valores seleccionados de los menús desplegables
+        const year = document.getElementById("yearSelect").value;
+        const faculty = document.getElementById("facultySelect").value;
+
+        // Determina la imagen según las selecciones
+        let imageSrc = '';
+
+        if (year === "2023-2024" && faculty === "Bilbao") {
+            imageSrc = "image/egutegi_2023_bilbao.jpg"; // Reemplaza con la ruta de la imagen correspondiente
+        } else if (year === "2023-2024" && faculty === "Vitoria") {
+            imageSrc = "image/egutegi_2023_vitoria.jpg"; // Reemplaza con la ruta de la imagen correspondiente
+        } else if (year === "2023-2024" && faculty === "Guipuzkoa") {
+            imageSrc = "image/egutegi_2023_guipuzkoa.jpg"; // Reemplaza con la ruta de la imagen correspondiente
+        } else if (year === "2022-2023" && faculty === "Bilbao") {
+            imageSrc = "image/egutegi_2022_bilbao.jpg"; // Reemplaza con la ruta de la imagen correspondiente
+        } else if (year === "2022-2023" && faculty === "Vitoria") {
+            imageSrc = "image/egutegi_2022_vitoria.jpg"; // Reemplaza con la ruta de la imagen correspondiente
+        } else if (year === "2022-2023" && faculty === "Guipuzkoa") {
+            imageSrc = "image/egutegi_2022_guipuzkoa.jpg"; // Reemplaza con la ruta de la imagen correspondiente
+        }
+
+        // Muestra la imagen correspondiente
+        const calendarImage = document.getElementById("calendar-image");
+        calendarImage.src = imageSrc;
+        calendarImage.style.display = "block";
+    }
+</script>
+
 </body>
 </html>
+
