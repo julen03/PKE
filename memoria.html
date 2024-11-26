@@ -16,52 +16,54 @@
             height: 100vh;
             margin: 0;
             display: flex;
-            flex-direction: column; /* Alineación vertical */
-            align-items: flex-start; /* Alineado al inicio horizontal */
-            padding: 10px; /* Añade espacio alrededor del contenido */
+            align-items: center;
+            justify-content: center;
         }
 
         .menu-container {
-            margin-bottom: 10px; /* Espaciado entre el menú y el contenido */
+            position: absolute;
+            top: 10px;
+            left: 10px;
         }
 
         .content-container {
+            text-align: center;
             background-color: rgba(255, 255, 255, 0.8);
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            flex: 1; /* Permite que el contenido use el resto del espacio */
-            width: 100%; /* Ocupa todo el ancho disponible */
-            text-align: center; /* Centra el contenido */
+            max-width: 90%;
         }
 
-        .btn-primary {
-            width: auto; /* Ajustar tamaño del botón */
+        .dropdown-menu {
+            background-color: rgba(255, 255, 255, 0.9);
         }
 
-        .menu-right {
-            margin-top: 10px; /* Espaciado superior */
-            text-align: center; /* Centra los botones */
-        }
-
-        .menu-right .btn {
-            display: block; /* Los botones se alinearán uno debajo del otro */
-            margin: 10px auto; /* Espaciado y centrado horizontal */
+        .select-container {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
         }
 
         .text-container {
-            text-align: justify;
-            padding: 15px;
-            background-color: #fff;
-            border-radius: 5px;
             margin-top: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: justify;
+        }
+
+        .links-container ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .links-container ul li {
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
 
-<!-- Menú a la izquierda -->
 <div class="menu-container">
     <div class="dropdown">
         <button class="btn btn-primary btn-lg dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
@@ -78,17 +80,71 @@
     </div>
 </div>
 
-<!-- Contenedor del contenido de Memoria -->
 <div class="content-container">
     <h1>Memoria</h1>
-    <p>Momentuzko arazo bat dela eta, ez daude oraindik eskuragarri aurreko ikasturteetako GrALik, bat bakarrik berreskuratu izan ahal dugu, Jon Vadillo 2023an aurkeztutakoa, adibide ona dela uste dugu.</p>
-    <p>PDF honen bidez gehiago jakin dezakezu: <a href="https://drive.google.com/file/d/1Mn3qx0fYVu9U7fwy3NQL_S8rfGCvB-LM/view" target="_blank">Memoria PDF</a></p>
+    <p>Selecciona filtros para ver las memorias correspondientes.</p>
+
+    <!-- Selectores -->
+    <div class="select-container">
+        <select id="yearSelect" class="form-select">
+            <option value="" selected>Año</option>
+            <option value="2023">2023</option>
+            <option value="2022">2022</option>
+        </select>
+
+        <select id="careerSelect" class="form-select">
+            <option value="" selected>Carrera</option>
+            <option value="informática">Ingeniería Informática</option>
+        </select>
+    </div>
+
+    <!-- Contenedor de enlaces -->
+    <div class="text-container links-container" id="links-container">
+        <p>No hay contenido disponible para esta selección.</p>
+    </div>
 </div>
+
+<!-- Script -->
+<script>
+    const links = {
+        "2023_informática": [
+            { text: "Memoria 1 - Sara Gracia", url: "https://addi.ehu.es/bitstream/handle/10810/63221/GrAL_Gracia_Sara.pdf?sequence=2&isAllowed=y" },
+            { text: "Memoria 2 - Jesús Rugarcía", url: "https://addi.ehu.es/bitstream/handle/10810/63227/TFG_Jesus_Rugarcia.pdf?sequence=2&isAllowed=y" },
+            { text: "Memoria 3 - Asier Insausti", url: "https://addi.ehu.es/bitstream/handle/10810/63229/TFG_Asier_Insausti.pdf?sequence=2&isAllowed=y" }
+        ],
+        "2022_informática": [
+            { text: "Memoria 1 - Unai Sainz", url: "https://addi.ehu.es/bitstream/handle/10810/58102/TFG_Unai_Sainz.pdf?sequence=2&isAllowed=y" },
+            { text: "Memoria 2 - Mikel Iturria", url: "https://addi.ehu.es/bitstream/handle/10810/58094/TFG_Iturria_Mikel.pdf?sequence=1&isAllowed=y" },
+            { text: "Memoria 3 - Iker Galardi", url: "https://addi.ehu.es/bitstream/handle/10810/58083/TFG_Iker_Galardi.pdf?sequence=2&isAllowed=y" }
+        ]
+    };
+
+    function updateContent() {
+        const year = document.getElementById('yearSelect').value;
+        const career = document.getElementById('careerSelect').value;
+
+        const key = `${year}_${career}`;
+        const container = document.getElementById('links-container');
+
+        if (links[key]) {
+            const html = `
+                <ul>
+                    ${links[key].map(link => `<li><a href="${link.url}" target="_blank">${link.text}</a></li>`).join("")}
+                </ul>
+            `;
+            container.innerHTML = html;
+        } else {
+            container.innerHTML = "<p>No hay contenido disponible para esta selección.</p>";
+        }
+    }
+
+    document.querySelectorAll('.form-select').forEach(select => {
+        select.addEventListener('change', updateContent);
+    });
+</script>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
-
-
