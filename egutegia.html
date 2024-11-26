@@ -85,18 +85,10 @@
     <div class="mb-3">
         <label for="yearSelect" class="form-label">Aukeratu urtea:</label>
         <select class="form-select" id="yearSelect">
-            <option value="2023-2024">2023-2024</option>
-            <option value="2022-2023">2022-2023</option>
-        </select>
-    </div>
-
-    <!-- Menú desplegable para seleccionar la facultad -->
-    <div class="mb-3">
-        <label for="facultySelect" class="form-label">Aukeratu fakultatea:</label>
-        <select class="form-select" id="facultySelect">
-            <option value="Bilbao">Bilbao</option>
-            <option value="Vitoria">Vitoria</option>
-            <option value="Guipuzkoa">Guipuzkoa</option>
+            <option value="1">1. konbokatoria</option>
+            <option value="2">2. konbokatoria</option>
+            <option value="3">3. konbokatoria</option>
+            <option value="4">4. konbokatoria</option>
         </select>
     </div>
 
@@ -116,24 +108,18 @@
     function showCalendar() {
         // Obtiene los valores seleccionados de los menús desplegables
         const year = document.getElementById("yearSelect").value;
-        const faculty = document.getElementById("facultySelect").value;
-
         // Determina la imagen según las selecciones
         let imageSrc = '';
 
-        if (year === "2023-2024" && faculty === "Bilbao") {
+        if (year === "1") {
             imageSrc = "image/egutegi_2023_bilbao.png"; // Reemplaza con la ruta de la imagen correspondiente
-        } else if (year === "2023-2024" && faculty === "Vitoria") {
+        } else if (year === "2") {
             imageSrc = "image/egutegi_2023_vitoria.png"; // Reemplaza con la ruta de la imagen correspondiente
-        } else if (year === "2023-2024" && faculty === "Guipuzkoa") {
+        } else if (year === "3") {
             imageSrc = "image/egutegi_2023_guipuzkoa.png"; // Reemplaza con la ruta de la imagen correspondiente
-        } else if (year === "2022-2023" && faculty === "Bilbao") {
+        } else if (year === "4") {
             imageSrc = "image/egutegi_2022_bilbao.png"; // Reemplaza con la ruta de la imagen correspondiente
-        } else if (year === "2022-2023" && faculty === "Vitoria") {
-            imageSrc = "image/egutegi_2022_vitoria.png"; // Reemplaza con la ruta de la imagen correspondiente
-        } else if (year === "2022-2023" && faculty === "Guipuzkoa") {
-            imageSrc = "image/egutegi_2022_guipuzkoa.png"; // Reemplaza con la ruta de la imagen correspondiente
-        }
+        } 
 
         // Verifica si la imagen existe antes de mostrarla
         const calendarImage = document.getElementById("calendar-image");
