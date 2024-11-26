@@ -92,9 +92,9 @@
 
 <!-- Contenedor centrado del texto -->
 <div class="content-container" id="startContainer">
-    <h1>¿Quieres empezar la Autoevaluación?</h1>
-    <p>Haz clic en el botón para comenzar.</p>
-    <button id="startBtn" class="btn btn-primary">Empezar Autoevaluación</button>
+    <h1>Autoebaluazioarekin hasi nahi duzu?</h1>
+    <p>Klik egin hasteko.</p>
+    <button id="startBtn" class="btn btn-primary">Autoebaluazioa hasi</button>
 </div>
 
 <!-- Contenedor de las preguntas (oculto hasta que se empiece la autoevaluación) -->
@@ -102,9 +102,9 @@
     <h1>Autoevaluación</h1>
     <div id="questionContent"></div>
     <div class="btn-container">
-        <button id="prevBtn" class="btn btn-secondary" onclick="prevQuestion()">Anterior</button>
-        <button id="nextBtn" class="btn btn-primary" onclick="nextQuestion()">Siguiente</button>
-        <button id="finishBtn" class="btn btn-success" onclick="finishQuiz()" style="display: none;">Finalizar</button>
+        <button id="prevBtn" class="btn btn-secondary" onclick="prevQuestion()">Aurrekoa</button>
+        <button id="nextBtn" class="btn btn-primary" onclick="nextQuestion()">Hurrengoa</button>
+        <button id="finishBtn" class="btn btn-success" onclick="finishQuiz()" style="display: none;">Bukatu</button>
     </div>
     <div class="feedback" id="feedback"></div>
 </div>
@@ -224,7 +224,7 @@
                 finishQuiz();
             }
         } else {
-            alert("Por favor, selecciona una opción.");
+            alert("Mesedez, aukeratu batenbat.");
         }
     }
 
@@ -242,11 +242,11 @@
         const feedback = document.getElementById('feedback');
         
         if (percentage > 50) {
-            feedback.innerText = `Has aprobado con ${score} de ${questions.length} (${Math.round(percentage)}%)`;
+            feedback.innerText = `Gainditu duzu!! ${score} de ${questions.length} (${Math.round(percentage)}%)`;
             feedback.classList.add('passed');
             feedback.classList.remove('failed');
         } else {
-            feedback.innerText = `Has suspendido con ${score} de ${questions.length} (${Math.round(percentage)}%)`;
+            feedback.innerText = `Ez duzu gainditu!! ${score} de ${questions.length} (${Math.round(percentage)}%)`;
             feedback.classList.add('failed');
             feedback.classList.remove('passed');
         }
