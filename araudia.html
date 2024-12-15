@@ -16,13 +16,13 @@
             height: 100vh;
             margin: 0;
             display: flex;
-            flex-direction: column; /* Alineación vertical */
-            align-items: flex-start; /* Alineado al inicio horizontal */
-            padding: 10px; /* Añade espacio alrededor del contenido */
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 10px;
         }
 
         .menu-container {
-            margin-bottom: 10px; /* Espaciado entre el menú y el contenido */
+            margin-bottom: 10px;
         }
 
         .content-container {
@@ -30,23 +30,23 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            flex: 1; /* Permite que el contenido use el resto del espacio */
-            width: 100%; /* Ocupa todo el ancho disponible */
-            text-align: center; /* Centra el contenido */
+            flex: 1;
+            width: 100%;
+            text-align: center;
         }
 
         .btn-primary {
-            width: auto; /* Ajustar tamaño del botón */
+            width: auto;
         }
 
         .menu-right {
-            margin-top: 10px; /* Espaciado superior */
-            text-align: center; /* Centra los botones */
+            margin-top: 10px;
+            text-align: center;
         }
 
         .menu-right .btn {
-            display: block; /* Los botones se alinearán uno debajo del otro */
-            margin: 10px auto; /* Espaciado y centrado horizontal */
+            display: block;
+            margin: 10px auto;
         }
 
         .text-container {
@@ -85,8 +85,9 @@
 
     <!-- Menú de normas a la derecha -->
     <div class="menu-right">
-        <button class="btn btn-outline-primary btn-lg" onclick="loadContent('informática')">Ingeniería Informática</button>
-        <button class="btn btn-outline-secondary btn-lg" onclick="loadContent('ia')">Inteligencia Artificial</button>
+        <button class="btn btn-outline-primary btn-lg" onclick="loadContent('informática')">Ingenieria Informatikoa</button>
+        <button class="btn btn-outline-secondary btn-lg" onclick="loadContent('ia')">Adimen Artifiziala</button>
+        <button class="btn btn-outline-success btn-lg" onclick="resetContent()">Guztien araudia</button>
     </div>
     <!-- Contenedor de texto -->
     <div class="text-container" id="text-container">
@@ -221,33 +222,40 @@
 
 </div>
 
+</div>
+
 <!-- Script para cargar el contenido dinámico -->
 <script>
-        const content = {
-            informática: `
-                <h1>Informática</h1>
+    const initialContent = document.getElementById('text-container').innerHTML;
+
+    const content = {
+        informática: `
+            <h1>Informática</h1>
                 <p>1. Helburua eta ezarpen eremua: TFGak dagokion titulua egiaztatzeko aginduan oinarritzen dira. Beste arau eta prozedurekin osatuko dira 
                 (ebaluazio sistemak, kredituen transferentzia, etab.). Fakultate edo eskola bakoitzaren araudi espezifikoa errespetatuz garatuko dira.</p>
                 <p>2. Tutoretza: Ikasle bakoitzak TFGaren zuzendari bat izango du, eta hark gidatuko du proiektu osoan zehar.</p>
                 <p>3. Lanaren gaia: Lanaren gaia ikasleak eta tutoreak adostu beharko dute, eta gai hori sektore teknologikoan egon behar da, eguneroko arazoei 
                 soluzio praktikoak eskaintzeko.</p>
-                <p>4. Ebaluzio irizpideak: TFGaren ebaluazioa egindako lanaren kalitatearen arabera egingo da, baita azken ahozko aurkezpenaren ebaluazioa ere.</p>
-            `,
-            ia: `
-                <h1>Inteligencia Artificial</h1>
+                <p>4. Ebaluzio irizpideak: TFGaren ebaluazioa egindako lanaren kalitatearen arabera egingo da, baita azken ahozko aurkezpenaren ebaluazioa ere.</p>        `,
+        ia: `
+            <h1>Inteligencia Artificial</h1>
                 <p>1. Helburua eta ezarpen eremua: IAko TFGak arlo espezializatuetara bideratuta daude, 
                 hala nola Machine Learning, Natural Language Processing, edo Computer Vision. Araudi orokorrak eta departamentuko eskakizunak beteko dituzte.</p>
                 <p>2. Ebaluzio irizpideak: Memoria idatziz aurkeztuko da, eta ahozko aurkezpena egingo da irakasle-talde baten aurrean.</p>
                 <p>3. Teknologia eta tresnak: IAko proiektuak ezagutza teknologiko aurreratua eskatzen du, eta ikasleek tresna egokiak erabili beharko dituzte, 
                 hala nola Python, TensorFlow edo PyTorch, proiektuaren helburuak lortzeko.</p>
                 <p>4. Kolaborazioa eta etika: TFGak beti izan beharko ditu kontuan etika-arazoak, adibidez, pribatutasuna eta datuen babesa, eta, halaber, 
-                proiektuek talde-lanaren garrantzia azpimarratu behar dute.</p>
-            `
-        };
+                proiektuek talde-lanaren garrantzia azpimarratu behar dute.</p>        `
+    };
 
     function loadContent(section) {
         const container = document.getElementById('text-container');
-        container.innerHTML = `<p>${content[section]}</p>`;
+        container.innerHTML = content[section];
+    }
+
+    function resetContent() {
+        const container = document.getElementById('text-container');
+        container.innerHTML = initialContent;
     }
 </script>
 
